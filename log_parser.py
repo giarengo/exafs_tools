@@ -30,6 +30,16 @@ class ExafsFit:
             i_set = i 
         if line.find('def parameters') != -1:
             i_def = i 
+
+        if line.find(': k-range') != -1: 
+            k_range = line.split(sep='=')[1].strip()
+        if line.find(': k-weight') != -1: 
+            k_weight = line.split(sep='=')[1].strip()
+        if line.find(': R-range') != -1: 
+            r_range = line.split(sep='=')[1].strip()
+
+        if line.find('name               N       S02') != -1:
+            i_paths = i
     
     guess_par={}
     try:
@@ -62,3 +72,13 @@ class ExafsFit:
                 break
     except: 
         pass
+
+    paths_r={}
+    try:
+        for line in l[i_paths+2:]:
+            ls = line.split()
+            paths_r[ls[1]] = float(ls[-1])
+            if line == '\n':
+                break
+    except:
+        pass        
